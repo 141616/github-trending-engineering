@@ -4,18 +4,20 @@ import { BrowserRouter, Outlet, Route, Routes, useLocation, useNavigate } from "
 
 interface Props { }
 const BattlePage = React.lazy(() => import("@/pages/battle"));
+const BattleResultPage = React.lazy(() => import("@/pages/result"));
 
 const Layout = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(pathname);
   return (
-    <div className="max-w-[1024px] mx-auto px-4">
+    <div className="max-w-[1024px] mx-auto px-4 flex flex-col h-screen">
       <div className="py-4">
         <button className={`mr-4 ${pathname === '/' ? 'text-orange-500' : ''}`} onClick={() => navigate("/")}>Trending</button>
         <button className={`mr-4 ${pathname === '/battle' ? 'text-orange-500' : ''}`} onClick={() => navigate("/battle")}>Battle</button>
       </div>
-      <Outlet />
+      <div className="h-full flex-auto">
+        <Outlet />
+      </div>
     </div>
   );
 }
@@ -26,6 +28,7 @@ const App: React.FC<Props> = (props: Props) => {
       <React.Suspense fallback={<div></div>}>
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="result" element={<BattleResultPage />}></Route>
             <Route path="battle" element={<BattlePage />}></Route>
             <Route path='/' element={<TrendingPage />}></Route>
           </Route>

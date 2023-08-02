@@ -3,6 +3,13 @@ export const getLanguageFromUrl = (search: string) => {
   return searchParams.get("language") || "All";
 };
 
+export const getPlayersFromUrl = (search: string) => {
+  const searchParams = new URLSearchParams(search);
+  const playerOne = searchParams.get("playerOne") || "";
+  const playerTwo = searchParams.get("playerTwo") || "";
+  return { playerOne, playerTwo };
+};
+
 const repoUrl = "https://api.github.com/search/repositories";
 /**
  * 生成 github 热门项目请求接口 url
