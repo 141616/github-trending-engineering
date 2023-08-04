@@ -1,3 +1,4 @@
+import { resultPath } from "@/App";
 import BattleInstructions from "@/components/BattleInstructions";
 import BattlePlayer from "@/components/BattlePlayer";
 import { useEffect, useState } from "react";
@@ -12,7 +13,7 @@ const BattlePage: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (playerOne && playerTwo) {
-      navigate(`/result?playerOne=${playerOne}&playerTwo=${playerTwo}`);
+      navigate(`${resultPath}?playerOne=${playerOne}&playerTwo=${playerTwo}`);
     }
   }, [playerOne, playerTwo]);
 

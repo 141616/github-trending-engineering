@@ -1,3 +1,4 @@
+import { battlePath } from "@/App";
 import Loading from "@/components/Loading";
 import PlayerCard from "@/components/PlayerCard";
 import TextButton from "@/components/TextButton";
@@ -58,7 +59,7 @@ const BattleResultPage: React.FC<Props> = (props: Props) => {
   }
 
   const handleReset = () => {
-    navigate("/battle")
+    navigate(battlePath)
   }
 
   if (!playerOne || !playerTwo) {
