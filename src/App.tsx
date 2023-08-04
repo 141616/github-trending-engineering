@@ -7,7 +7,7 @@ const BattlePage = React.lazy(() => import("@/pages/battle"));
 const BattleResultPage = React.lazy(() => import("@/pages/result"));
 
 const isEnvProduction = process.env.NODE_ENV === 'production';
-const routePrefix = isEnvProduction ? "/github-trending-engineering" : '';
+const routePrefix = isEnvProduction ? "github-trending-engineering" : '';
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -31,10 +31,10 @@ const App: React.FC<Props> = (props: Props) => {
     <BrowserRouter>
       <React.Suspense fallback={<div></div>}>
         <Routes>
-          <Route path={routePrefix} element={<Layout />}>
-            <Route path="result" element={<BattleResultPage />}></Route>
-            <Route path="battle" element={<BattlePage />}></Route>
-            <Route path='/' element={<TrendingPage />}></Route>
+          <Route path="/" element={<Layout />}>
+            <Route path={`${routePrefix}/result"`} element={<BattleResultPage />}></Route>
+            <Route path={`${routePrefix}/battle`} element={<BattlePage />}></Route>
+            <Route path={`${routePrefix}/`} element={<TrendingPage />}></Route>
           </Route>
         </Routes>
       </React.Suspense>
