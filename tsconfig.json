@@ -8,5 +8,12 @@
         "./*"
       ],
     },
-  }
+    "typeRoots": [
+      "./*.d.ts"
+    ],
+  },
+  "include": [
+    "src", // Add the folder containing the .d.ts files here
+    // Other paths you want to include
+  ]
 }
