@@ -3,7 +3,7 @@ import MyIcon from "@/components/MyIcon";
 import RepoCards from "@/components/RepoCards";
 import { IRepoInfo } from "@/types";
 import { generatePushUrl, generateUrl, getLanguageFromUrl } from "@/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props { }
 
@@ -19,23 +19,31 @@ const TrendingPage = (props: Props) => {
     language: getLanguageFromUrl(window.location.search),
   });
   const [error, setError] = useState<string | null>(null);
+  // 缓存数据
+  const reposStorageMap = useRef<{[key: string]: IRepoInfo[]}>({})
+  
 
   useEffect(() => {
     fetchRepos(params.language, params.page);
-  }, [params]);
+  }, []);
 
-  const fetchRepos = (language: string, page: number) => {
+  const updateReposStorageMap = (items: IRepoInfo[], lang: string) => {
+    reposStorageMap.current[lang] = items;
+  }
+
+  const fetchRepos = (lang: string, page: number) => {
     setLoading(true);
     setError(null);
-    const url = generateUrl(language, page);
+    const url = generateUrl(lang, page);
     fetch(url)
       .then((res) => (res.ok ? res.json() : Promise.reject(res)))
       .then((data) => {
         const items = data?.items || [];
+        const newItems = page === 1 ? items : [...repos, ...items];
+        setRepos(newItems);
+        // 只缓存每个language的第一页
         if (page === 1) {
-          setRepos(items);
-        } else {
-          setRepos([...repos, ...items]);
+          updateReposStorageMap(newItems, lang);
         }
         setTotal(data?.total_count || 0);
       })
@@ -49,11 +57,16 @@ const TrendingPage = (props: Props) => {
 
   const handleLanguageChange = (val: string) => {
     setParams({
-      ...params,
       language: val,
       page: 1,
     });
-    setRepos([]);
+    const storageRepos = reposStorageMap.current?.[val] || [];
+    if (storageRepos.length > 0) {
+      setRepos(storageRepos);
+    } else {
+      setRepos([]);
+      fetchRepos(val, 1);
+    }
     window.history.replaceState({}, "", generatePushUrl(val));
   };
 
@@ -77,10 +90,13 @@ const TrendingPage = (props: Props) => {
             if (loading) {
               return;
             }
+            const newPage = params.page + 1;
             setParams({
               ...params,
-              page: params.page + 1,
+              page: newPage,
             });
+
+            fetchRepos(params.language, newPage);
           }}
         />
       )}

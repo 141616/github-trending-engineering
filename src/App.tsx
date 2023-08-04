@@ -6,8 +6,9 @@ interface Props { }
 const BattlePage = React.lazy(() => import("@/pages/battle"));
 const BattleResultPage = React.lazy(() => import("@/pages/result"));
 
-const isEnvProduction = process.env.NODE_ENV === 'production';
-export const routePrefix = isEnvProduction ? "github-trending-engineering" : '';
+// const isEnvProduction = process.env.NODE_ENV !== 'production';
+// export const routePrefix = !isEnvProduction ? "github-trending-engineering" : '';
+ const routePrefix = "";
 export const homePath = `${routePrefix}/`;
 export const battlePath = `${routePrefix}/battle`;
 export const resultPath = `${routePrefix}/result`;
@@ -42,6 +43,7 @@ const Layout = () => {
 
 const App: React.FC<Props> = (props: Props) => {
   return (
+    // <BrowserRouter basename={isEnvProduction ? '/github-trending-engineering' : ''}>
     <BrowserRouter>
       <React.Suspense fallback={<div></div>}>
         <Routes>

@@ -13,6 +13,7 @@ const BattlePage: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (playerOne && playerTwo) {
+      // console.log(`/${resultPath}?playerOne=${playerOne}&playerTwo=${playerTwo}`)
       navigate(`${resultPath}?playerOne=${playerOne}&playerTwo=${playerTwo}`);
     }
   }, [playerOne, playerTwo]);
