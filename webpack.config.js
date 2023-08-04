@@ -7,6 +7,11 @@ module.exports = {
     filename: "main.[contenthash:8].js",
     path: path.resolve(__dirname, "build"),
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   module: {
     rules: [
       {
