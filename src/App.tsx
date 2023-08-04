@@ -16,17 +16,18 @@ const Layout = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const isBattlePage = pathname.includes("/battle")
   return (
     <div className="max-w-[1024px] mx-auto px-4 flex flex-col h-screen">
       <div className="py-4">
         <button
-          className={`mr-4 ${pathname === homePath ? 'text-orange-500' : ''}`}
+          className={`mr-4 ${!isBattlePage ? 'text-orange-500' : ''}`}
           onClick={() => navigate(homePath)}
         >
           Trending
         </button>
         <button
-          className={`mr-4 ${pathname === battlePath ? 'text-orange-500' : ''}`}
+          className={`mr-4 ${isBattlePage ? 'text-orange-500' : ''}`}
           onClick={() => navigate(battlePath)}
         >
           Battle
