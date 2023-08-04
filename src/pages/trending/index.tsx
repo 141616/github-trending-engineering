@@ -51,7 +51,9 @@ const TrendingPage = (props: Props) => {
     setParams({
       ...params,
       language: val,
+      page: 1,
     });
+    setRepos([]);
     window.history.replaceState({}, "", generatePushUrl(val));
   };
 
