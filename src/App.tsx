@@ -26,7 +26,6 @@ const Layout = () => {
 }
 
 const App: React.FC<Props> = (props: Props) => {
-  console.log("enter App");
   return (
     <BrowserRouter>
       <React.Suspense fallback={<div></div>}>
